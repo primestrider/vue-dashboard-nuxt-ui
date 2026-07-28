@@ -23,14 +23,6 @@
           npm run create-feature my-feature
         </code>
       </div>
-
-      <RouterLink :to="{ name: ExamplePageName.EXAMPLE }">
-        <button
-          class="px-8 py-3 bg-green-600 text-white rounded-xl font-medium shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-300 cursor-pointer"
-        >
-          Check Example Page
-        </button>
-      </RouterLink>
     </div>
 
     <footer class="mt-20 text-sm text-gray-500 animate-fade-in-slow">
@@ -40,8 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { ExamplePageName } from "@/features/example/models"
-
 // Static landing page — no extra logic
 </script>
 

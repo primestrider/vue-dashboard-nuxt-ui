@@ -1,6 +1,6 @@
 {
   "name": "vue-dashboard-nuxt-ui",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,8 @@
     "type-check": "vue-tsc --build",
     "lint": "run-s \"lint:*\"",
     "lint:oxlint": "oxlint . --fix",
-    "lint:eslint": "eslint . --fix --cache"
+    "lint:eslint": "eslint . --fix --cache",
+    "create-feature": "node scripts/create-feature.js"
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.3.0",
@@ -31,6 +32,7 @@
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28.0.3",
     "@types/node": "^24.13.3",

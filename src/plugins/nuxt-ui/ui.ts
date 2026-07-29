@@ -19,8 +19,8 @@ const defaultFieldVariant: Variants = {
 
 export const nuxtConfigUi = {
   colors: {
-    primary: "emerald",
-    neutral: "slate",
+    primary: "slate",
+    neutral: "mist",
   },
 
   // Text input

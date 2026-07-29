@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import * as v from "valibot"
-import type { AuthFormField, FormSubmitEvent } from "@nuxt/ui"
+import * as v from "valibot";
+import type { AuthFormField, FormSubmitEvent } from "@nuxt/ui";
 
-import AuthenticationPageShell from "../components/AuthenticationPageShell.vue"
+import AuthenticationPageShell from "../components/AuthenticationPageShell.vue";
+import { translate } from "@/plugins/language/index.ts";
 
 const fields: AuthFormField[] = [
   {
@@ -24,7 +25,7 @@ const fields: AuthFormField[] = [
     label: "Remember me",
     type: "checkbox",
   },
-]
+];
 
 const schema = v.object({
   email: v.pipe(
@@ -37,20 +38,20 @@ const schema = v.object({
     v.nonEmpty("Password is required"),
     v.minLength(8, "Password must be at least 8 characters"),
   ),
-})
+});
 
-type Schema = v.InferOutput<typeof schema>
+type Schema = v.InferOutput<typeof schema>;
 
 function onSubmit(event: FormSubmitEvent<Schema>) {
   // TODO: connect to authentication API
-  console.log(event.data)
+  console.log(event.data);
 }
 </script>
 
 <template>
   <AuthenticationPageShell
-    title="Welcome back"
-    description="Sign in to your account to continue."
+    :title="translate('features.authentication.login.page_title')"
+    :description="translate('features.authentication.login.page_description')"
   >
     <UAuthForm
       :schema="schema"
@@ -59,10 +60,7 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
       @submit="onSubmit"
     >
       <template #password-hint>
-        <ULink
-          to="/authentication/password/forget"
-          class="text-sm font-medium text-primary"
-        >
+        <ULink to="/authentication/password/forget" class="text-sm font-medium text-primary">
           Forgot password?
         </ULink>
       </template>

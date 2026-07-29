@@ -94,7 +94,7 @@ const highlights = [
       <div
         class="flex flex-1 items-center justify-center px-4 py-8 sm:px-8 sm:py-12 lg:px-12 xl:px-16"
       >
-        <div class="w-full max-w-sm sm:max-w-xl">
+        <div class="w-full max-w-sm sm:max-w-2xl">
           <RouterView />
         </div>
       </div>

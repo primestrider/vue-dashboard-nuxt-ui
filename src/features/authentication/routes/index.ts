@@ -1,11 +1,14 @@
-import type { RouteRecordRaw } from "vue-router"
+import type { RouteRecordRaw } from "vue-router";
 
-import { AuthenticationPageName } from "../models"
+import { AuthenticationPageName } from "../models";
 
 const authenticationRoutes: RouteRecordRaw[] = [
   {
     path: "/authentication",
     component: () => import("@/features/authentication/layouts/AuthenticationLayout.vue"),
+    redirect: {
+      name: AuthenticationPageName.LOGIN,
+    },
     children: [
       {
         path: "login",
@@ -24,6 +27,6 @@ const authenticationRoutes: RouteRecordRaw[] = [
       // },
     ],
   },
-]
+];
 
-export default authenticationRoutes
+export default authenticationRoutes;

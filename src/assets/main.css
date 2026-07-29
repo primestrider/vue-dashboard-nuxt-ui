@@ -10,3 +10,30 @@
     @apply font-sans;
   }
 }
+
+@keyframes form-field-message-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    filter: blur(2px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(1px) scale(1);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@layer utilities {
+  .animate-form-field-message-in {
+    animation: form-field-message-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-origin: top center;
+  }
+}

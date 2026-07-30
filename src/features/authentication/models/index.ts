@@ -3,7 +3,3 @@ export enum AuthenticationPageName {
   FORGET_PASSWORD = "ForgetPassword",
   RESET_PASSWORD = "ResetPassword",
 }
-
-export type AuthenticationRequestPayload = {
-  name: string
-}

@@ -1,6 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-
-import { AuthenticationPageName } from "../models";
+import { AuthenticationPageName } from "./models";
 
 const authenticationRoutes: RouteRecordRaw[] = [
   {
@@ -15,16 +14,16 @@ const authenticationRoutes: RouteRecordRaw[] = [
         name: AuthenticationPageName.LOGIN,
         component: () => import("@/features/authentication/views/LoginView.vue"),
       },
-      // {
-      //   path: "password/forget",
-      //   name: AuthenticationPageName.FORGET_PASSWORD,
-      //   component: () => import("@/features/authentication/views/ForgetPasswordView.vue"),
-      // },
-      // {
-      //   path: "password/reset",
-      //   name: AuthenticationPageName.RESET_PASSWORD,
-      //   component: () => import("@/features/authentication/views/ResetPasswordView.vue"),
-      // },
+      {
+        path: "password/forget",
+        name: AuthenticationPageName.FORGET_PASSWORD,
+        component: () => import("@/features/authentication/views/ForgetPasswordView.vue"),
+      },
+      {
+        path: "password/reset",
+        name: AuthenticationPageName.RESET_PASSWORD,
+        component: () => import("@/features/authentication/views/ResetPasswordView.vue"),
+      },
     ],
   },
 ];

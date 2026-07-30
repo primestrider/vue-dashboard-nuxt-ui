@@ -3,14 +3,20 @@ import type { NuxtUIOptions } from "@nuxt/ui/vite";
 /** Runtime app config — color mapping, icons, and per-component overrides. */
 export type AppConfigUi = NonNullable<NuxtUIOptions["ui"]>;
 
-type Variants = {
+type FieldVariants = {
+  slots: {
+    root?: string;
+  };
   defaultVariants: {
     size: "xl";
     variant: "soft";
   };
 };
 
-const defaultFieldVariant: Variants = {
+const defaultFieldVariant: FieldVariants = {
+  slots: {
+    root: "!w-full",
+  },
   defaultVariants: {
     size: "xl",
     variant: "soft",
@@ -61,6 +67,15 @@ export const nuxtConfigUi = {
       container: "relative pb-5",
       error: "absolute inset-x-0 bottom-0 text-error animate-form-field-message-in",
       help: "absolute inset-x-0 bottom-0 text-muted animate-form-field-message-in",
+    },
+  },
+
+  link: {
+    variants: {
+      active: {
+        true: "text-sky-600",
+        false: "text-muted text-sky-600",
+      },
     },
   },
 } satisfies AppConfigUi;

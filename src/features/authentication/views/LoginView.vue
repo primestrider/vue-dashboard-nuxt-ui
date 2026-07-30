@@ -1,51 +1,43 @@
 <script setup lang="ts">
-import * as v from "valibot";
-import type { AuthFormField, FormSubmitEvent } from "@nuxt/ui";
+import { reactive, useTemplateRef } from "vue";
+
+import type { FormSubmitEvent } from "@nuxt/ui";
 
 import AuthenticationPageShell from "../components/AuthenticationPageShell.vue";
-import { translate } from "@/plugins/language/index.ts";
+import { translate } from "@/plugins/language";
+import { loginSchema, type LoginForm } from "../schemas/login.schema.ts";
+import { AuthenticationPageName } from "../models/index.ts";
+import { usePasswordVisibility } from "@/shared/composables/usePasswordVisibility.ts";
+import { useMutation } from "@tanstack/vue-query";
+import { requestLogin } from "../services/api.ts";
 
-const fields: AuthFormField[] = [
-  {
-    name: "email",
-    type: "email",
-    label: "Email",
-    placeholder: "you@example.com",
-    required: true,
-  },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    placeholder: "Enter your password",
-    required: true,
-  },
-  {
-    name: "remember",
-    label: "Remember me",
-    type: "checkbox",
-  },
-];
+const loginFormRef = useTemplateRef("loginFormRef");
 
-const schema = v.object({
-  email: v.pipe(
-    v.string("Email is required"),
-    v.nonEmpty("Email is required"),
-    v.email("Invalid email address"),
-  ),
-  password: v.pipe(
-    v.string("Password is required"),
-    v.nonEmpty("Password is required"),
-    v.minLength(8, "Password must be at least 8 characters"),
-  ),
+const loginForm = reactive<LoginForm>({
+  email: "",
+  password: "",
+  remember: false,
 });
 
-type Schema = v.InferOutput<typeof schema>;
+const passwordVisibility = usePasswordVisibility();
 
-function onSubmit(event: FormSubmitEvent<Schema>) {
-  // TODO: connect to authentication API
-  console.log(event.data);
-}
+const { mutate: mutateLogin, isPending } = useMutation({
+  mutationFn: requestLogin,
+  onSuccess: () => {},
+  onError: () => {
+    // loginFormRef.value?.setErrors([
+    //   {
+    //     name: "password",
+    //     message: "Invalid",
+    //   },
+    // ]);
+  },
+});
+
+const onSubmitLogin = ({ data }: FormSubmitEvent<LoginForm>) => {
+  // mutateLogin(data);
+  console.log(data);
+};
 </script>
 
 <template>
@@ -53,24 +45,64 @@ function onSubmit(event: FormSubmitEvent<Schema>) {
     :title="translate('features.authentication.login.page_title')"
     :description="translate('features.authentication.login.page_description')"
   >
-    <UAuthForm
-      :schema="schema"
-      :fields="fields"
-      :submit="{ label: 'Sign in', block: true }"
-      @submit="onSubmit"
+    <UForm
+      :schema="loginSchema"
+      :state="loginForm"
+      ref="loginFormRef"
+      :disabled="isPending"
+      class="space-y-4"
+      @submit="onSubmitLogin"
     >
-      <template #password-hint>
-        <ULink to="/authentication/password/forget" class="text-sm font-medium text-primary">
-          Forgot password?
-        </ULink>
-      </template>
+      <UFormField
+        name="email"
+        :label="translate('features.authentication.login.form.email.label')"
+        required
+      >
+        <UInput
+          v-model="loginForm.email"
+          type="email"
+          :placeholder="translate('features.authentication.login.form.email.placeholder')"
+        />
+      </UFormField>
 
-      <template #footer>
-        <p class="text-center text-sm text-muted">
-          Don't have an account?
-          <ULink to="#" class="font-medium text-primary">Contact admin</ULink>
-        </p>
-      </template>
-    </UAuthForm>
+      <UFormField name="password" label="Password" required>
+        <template #hint>
+          <ULink :to="{ name: AuthenticationPageName.FORGET_PASSWORD }">{{
+            translate("features.authentication.login.form.forget_password_link")
+          }}</ULink>
+        </template>
+
+        <UInput
+          v-model="loginForm.password"
+          :type="passwordVisibility.type"
+          placeholder="Enter your password"
+        >
+          <template #trailing>
+            <UButton
+              color="neutral"
+              variant="link"
+              size="sm"
+              :icon="passwordVisibility.icon"
+              :aria-label="passwordVisibility.ariaLabel"
+              :aria-pressed="passwordVisibility.visible"
+              aria-controls="password"
+              @click="passwordVisibility.toggle"
+            /> </template
+        ></UInput>
+      </UFormField>
+
+      <UCheckbox
+        v-model="loginForm.remember"
+        :label="translate('features.authentication.login.form.remember_me')"
+      />
+
+      <UButton
+        class="mt-2"
+        type="submit"
+        block
+        :label="translate('features.authentication.login.form.button_login')"
+        :loading="isPending"
+      />
+    </UForm>
   </AuthenticationPageShell>
 </template>

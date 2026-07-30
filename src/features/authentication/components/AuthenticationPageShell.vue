@@ -1,14 +1,14 @@
 <script setup lang="ts">
 defineProps<{
-  title: string
-  description?: string
-}>()
+  title: string;
+  description?: string;
+}>();
 </script>
 
 <template>
-  <div class="w-full space-y-8">
+  <section class="w-full space-y-8">
     <header class="space-y-2">
-      <h1 class="text-2xl font-semibold tracking-tight text-highlighted sm:text-3xl">
+      <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-highlighted">
         {{ title }}
       </h1>
       <p v-if="description" class="text-sm leading-relaxed text-muted">
@@ -19,5 +19,5 @@ defineProps<{
     <div>
       <slot />
     </div>
-  </div>
+  </section>
 </template>

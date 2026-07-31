@@ -4,14 +4,15 @@ import { UtilsPageName } from "./models";
 
 const utilRoutes: RouteRecordRaw[] = [
   {
-    path: "/",
-    name: "LandingPage",
-    component: () => import("@/shared/views/LandingPageView.vue"),
-  },
-  {
     path: "/:pathMatch(.*)*",
     name: UtilsPageName.PAGE_NOT_FOUND,
-    component: () => import("@/shared/views/PageNotFound.vue"),
+    component: () => import("@/shared/views/NotFoundView.vue"),
+  },
+
+  {
+    path: "/forbidden",
+    name: UtilsPageName.FORBIDDEN,
+    component: () => import("@/shared/views/ForbiddenView.vue"),
   },
 ];
 

@@ -11,16 +11,20 @@ import { usePasswordVisibility } from "@/shared/composables/usePasswordVisibilit
 import { useMutation } from "@tanstack/vue-query";
 import { requestLogin } from "../services/api.ts";
 
+/** Reference to the Nuxt UI form instance for programmatic error handling. */
 const loginFormRef = useTemplateRef("loginFormRef");
 
+/** Reactive form state validated by {@link loginSchema}. */
 const loginForm = reactive<LoginForm>({
   email: "",
   password: "",
   remember: false,
 });
 
+/** Toggle state for the password field visibility button. */
 const passwordVisibility = usePasswordVisibility();
 
+/** Login mutation — wire `onSuccess` to persist tokens and redirect. */
 const { mutate: mutateLogin, isPending } = useMutation({
   mutationFn: requestLogin,
   onSuccess: () => {},
@@ -34,6 +38,11 @@ const { mutate: mutateLogin, isPending } = useMutation({
   },
 });
 
+/**
+ * Handles validated form submission from `UForm`.
+ *
+ * @param payload - Validated form data emitted only when schema checks pass.
+ */
 const onSubmitLogin = ({ data }: FormSubmitEvent<LoginForm>) => {
   // mutateLogin(data);
   console.log(data);

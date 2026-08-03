@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/** Marketing highlights shown on the desktop left panel. */
 const highlights = [
   "Real-time dashboard analytics",
   "Role-based team access",

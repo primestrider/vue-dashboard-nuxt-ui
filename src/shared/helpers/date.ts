@@ -5,10 +5,10 @@ import { enUS, id } from "date-fns/locale"
 import type { DateLocaleCode } from "../models"
 
 /**
- * Map i18n locale -> date-fns locale
+ * Maps vue-i18n locale codes to date-fns locale objects.
  *
- * IMPORTANT:
- * - Key harus sama dengan locale code di vue-i18n
+ * @remarks
+ * Keys must match the base locale codes configured in vue-i18n (e.g. `en`, `id`).
  */
 export const DATE_FNS_LOCALES: Record<string, Locale> = {
   en: enUS,
@@ -16,8 +16,10 @@ export const DATE_FNS_LOCALES: Record<string, Locale> = {
 }
 
 /**
- * Normalize input into a valid Date object.
- * Returns null if date is invalid.
+ * Normalizes a date input into a valid {@link Date} instance.
+ *
+ * @param date - ISO string or Date object.
+ * @returns Parsed date, or `null` when the value is invalid.
  */
 const toDate = (date: string | Date): Date | null => {
   const parsed = typeof date === "string" ? parseISO(date) : date
@@ -25,7 +27,11 @@ const toDate = (date: string | Date): Date | null => {
 }
 
 /**
- * Safely format date with locale support.
+ * Formats a date safely, returning a fallback when parsing fails.
+ *
+ * @param date - ISO string or Date object.
+ * @param pattern - date-fns format pattern.
+ * @param locale - date-fns locale used for month/day names.
  */
 const formatSafe = (date: string | Date, pattern: string, locale: Locale): string => {
   const parsed = toDate(date)
@@ -35,8 +41,15 @@ const formatSafe = (date: string | Date, pattern: string, locale: Locale): strin
 }
 
 /**
- * Format date into readable string.
- * Example: "21 Jan 2025"
+ * Formats a date into a readable string.
+ *
+ * @param date - ISO string or Date object.
+ * @param localeCode - App locale code. Defaults to `"en"`.
+ * @param pattern - date-fns format pattern. Defaults to `"dd MMM yyyy"`.
+ * @returns Formatted date, or `"-"` when invalid.
+ *
+ * @example
+ * formatDate("2025-01-21") // "21 Jan 2025"
  */
 export const formatDate = (
   date: string | Date,
@@ -48,8 +61,15 @@ export const formatDate = (
 }
 
 /**
- * Format date with time.
- * Example: "21 Jan 2025, 14:30"
+ * Formats a date together with its time component.
+ *
+ * @param date - ISO string or Date object.
+ * @param localeCode - App locale code. Defaults to `"en"`.
+ * @param pattern - date-fns format pattern. Defaults to `"dd MMM yyyy, HH:mm"`.
+ * @returns Formatted date-time, or `"-"` when invalid.
+ *
+ * @example
+ * formatDateTime("2025-01-21T14:30:00") // "21 Jan 2025, 14:30"
  */
 export const formatDateTime = (
   date: string | Date,
@@ -61,10 +81,15 @@ export const formatDateTime = (
 }
 
 /**
- * Format relative time.
- * Example: "5 minutes ago"
- * ⚠️ Do NOT use for date-only strings (YYYY-MM-DD),
- * as timezone differences may cause incorrect results.
+ * Formats a timestamp as relative time from now.
+ *
+ * @param date - ISO string or Date object.
+ * @param localeCode - App locale code. Defaults to `"en"`.
+ * @returns Relative label such as `"5 minutes ago"`, or `"-"` when invalid.
+ *
+ * @remarks
+ * Avoid date-only strings (`YYYY-MM-DD`) because timezone differences can
+ * produce misleading relative results.
  */
 export const formatTimeStampRelative = (
   date: string | Date,
@@ -81,5 +106,10 @@ export const formatTimeStampRelative = (
   })
 }
 
+/**
+ * Type guard for supported date locale codes.
+ *
+ * @param locale - Raw locale string, usually from vue-i18n.
+ */
 export const isSupportedDateLocale = (locale: string): locale is DateLocaleCode =>
   locale in DATE_FNS_LOCALES

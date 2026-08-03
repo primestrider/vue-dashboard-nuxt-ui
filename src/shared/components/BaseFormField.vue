@@ -1,24 +1,20 @@
-<!-- src/components/form/BaseFormField.vue -->
+<!-- src/shared/components/BaseFormField.vue -->
 <script setup lang="ts">
 import { computed, useId } from "vue"
 
 import type { BaseFormFieldProps } from "../models"
 
 /**
- * BaseFormField
+ * Accessible form field wrapper with reserved space for labels and messages.
  *
- * Headless form field wrapper with:
- * - Reserved space for label & messages (prevents layout shift)
- * - Accessible error & hint handling
- * - Clean DOM (no fake placeholders like &nbsp;)
- *
+ * @remarks
  * Responsibilities:
- * - Layout & accessibility only
- * - Does NOT manage form state or validation logic
+ * - Layout and accessibility wiring only
+ * - Prevents layout shift by reserving message row height
+ * - Does **not** manage form state or validation logic
  *
- * Expected usage:
- * - Parent handles value & validation
- * - This component only renders structure
+ * The parent form owns value binding and validation. This component only
+ * renders structure and ARIA attributes via {@link BaseFormFieldProps}.
  */
 const {
   label = "",
@@ -30,30 +26,27 @@ const {
 } = defineProps<BaseFormFieldProps>()
 
 /**
- * Generate stable unique ID
- * Used when fieldName is not provided
+ * Fallback ID used when {@link BaseFormFieldProps.fieldName} is not provided.
  */
 const uid = useId()
 
 /**
- * Whether the field currently has an error
- * Disabled fields do not display errors
+ * Whether the field should display an error message.
+ *
+ * @remarks Disabled fields never show errors even when `error` is set.
  */
 const hasError = computed(() => Boolean(error) && !disabled)
 
-/**
- * Error message ID (for aria-describedby)
- */
+/** DOM id for the error message, referenced by `aria-describedby`. */
 const errorId = computed(() => (hasError.value ? `${fieldName || uid}-error` : undefined))
 
-/**
- * Hint message ID (for aria-describedby)
- */
+/** DOM id for the hint message, referenced by `aria-describedby`. */
 const hintId = computed(() => (hint && !hasError.value ? `${fieldName || uid}-hint` : undefined))
 
 /**
- * aria-describedby value
- * Points to either error or hint message
+ * Combined `aria-describedby` target.
+ *
+ * @remarks Error text takes priority over hint text.
  */
 const describedBy = computed(() => errorId.value || hintId.value)
 </script>

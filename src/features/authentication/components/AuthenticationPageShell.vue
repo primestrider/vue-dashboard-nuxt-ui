@@ -1,8 +1,18 @@
 <script setup lang="ts">
+/**
+ * Shared page chrome for authentication views.
+ *
+ * @remarks
+ * Provides a consistent title, optional description, and default slot for form content.
+ * Does not handle layout chrome such as the sidebar or color-mode toggle —
+ * that belongs to {@link AuthenticationLayout}.
+ */
 defineProps<{
-  title: string;
-  description?: string;
-}>();
+  /** Primary heading shown above the form. */
+  title: string
+  /** Optional supporting copy displayed below the title. */
+  description?: string
+}>()
 </script>
 
 <template>

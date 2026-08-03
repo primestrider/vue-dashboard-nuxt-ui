@@ -1,6 +1,13 @@
-import type { RouteRecordRaw } from "vue-router";
-import { AuthenticationPageName } from "./models";
+import type { RouteRecordRaw } from "vue-router"
 
+import { AuthenticationPageName } from "./models"
+
+/**
+ * Public authentication routes rendered inside {@link AuthenticationLayout}.
+ *
+ * @remarks
+ * These routes live outside `AppLayout` and do not require an active session.
+ */
 const authenticationRoutes: RouteRecordRaw[] = [
   {
     path: "/authentication",
@@ -26,6 +33,6 @@ const authenticationRoutes: RouteRecordRaw[] = [
       },
     ],
   },
-];
+]
 
-export default authenticationRoutes;
+export default authenticationRoutes

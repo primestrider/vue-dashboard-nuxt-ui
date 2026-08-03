@@ -1,5 +1,12 @@
-import * as valibot from "valibot";
+import * as valibot from "valibot"
 
+/**
+ * Client-side validation schema for the login form.
+ *
+ * @remarks
+ * Used by `UForm` via the Standard Schema protocol.
+ * Field names must match the reactive form state in {@link LoginView}.
+ */
 export const loginSchema = valibot.object({
   email: valibot.pipe(
     valibot.string("Email is required"),
@@ -12,6 +19,7 @@ export const loginSchema = valibot.object({
     valibot.minLength(8, "Password must be at least 8 characters"),
   ),
   remember: valibot.optional(valibot.boolean()),
-});
+})
 
-export type LoginForm = valibot.InferOutput<typeof loginSchema>;
+/** Inferred output type of {@link loginSchema}. */
+export type LoginForm = valibot.InferOutput<typeof loginSchema>

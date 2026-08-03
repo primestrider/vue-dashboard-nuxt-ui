@@ -20,6 +20,8 @@
     "@nuxt/ui": "^4.10.0",
     "@tanstack/vue-query": "^5.101.4",
     "@unhead/vue": "^3.2.3",
+    "@unovis/ts": "^1.6.7",
+    "@unovis/vue": "^1.6.7",
     "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^14.3.0",
     "axios": "^1.18.1",

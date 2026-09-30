@@ -23,6 +23,19 @@ export type ApiResponse<ResponseData = null> = {
   data: ResponseData | null
 }
 
+/**
+ * Normalized error rejected by the axios response interceptor.
+ *
+ * @see setupInterceptors
+ */
+export type ApiError = {
+  message: string
+  /** HTTP status, absent when no response was received. */
+  status?: number
+  /** Raw response body returned by the server. */
+  data?: unknown
+}
+
 /** Common pagination query parameters for list endpoints. */
 export type PaginationRequest = {
   page: number

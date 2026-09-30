@@ -34,13 +34,11 @@ export const nuxtConfigUi = {
   textarea: defaultFieldVariant,
   inputNumber: defaultFieldVariant,
 
-  // Selects
-  select: defaultFieldVariant,
-  selectMenu: defaultFieldVariant,
+  // Selects — `Select` and `SelectMenu` have no `root` slot (their outer element is `base`),
+  // so they only take the shared size/variant defaults.
+  select: { defaultVariants: defaultFieldVariant.defaultVariants },
+  selectMenu: { defaultVariants: defaultFieldVariant.defaultVariants },
   inputMenu: defaultFieldVariant,
-
-  // Date & time
-  datePicker: defaultFieldVariant,
 
   // Choice inputs
   checkbox: defaultFieldVariant,

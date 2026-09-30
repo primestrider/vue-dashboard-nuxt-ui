@@ -17,6 +17,12 @@ export const Permission = {
   ORDERS_READ: "orders:read",
   CUSTOMERS_READ: "customers:read",
   TRANSACTIONS_READ: "transactions:read",
+  PRODUCTS_READ: "products:read",
+  PRODUCTS_WRITE: "products:write",
+  RECIPES_READ: "recipes:read",
+  POSTS_READ: "posts:read",
+  USERS_READ: "users:read",
+  USERS_WRITE: "users:write",
 } as const
 
 /**

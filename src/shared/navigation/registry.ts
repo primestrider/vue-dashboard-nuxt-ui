@@ -1,7 +1,12 @@
 import { customersNavigation } from "@/features/customers/navigation"
 import { dashboardNavigation } from "@/features/dashboard/navigation"
+import { imageGeneratorNavigation } from "@/features/image-generator/navigation"
 import { ordersNavigation } from "@/features/orders/navigation"
+import { postsNavigation } from "@/features/posts/navigation"
+import { productsNavigation } from "@/features/products/navigation"
+import { recipesNavigation } from "@/features/recipes/navigation"
 import { transactionsNavigation } from "@/features/transactions/navigation"
+import { usersNavigation } from "@/features/users/navigation"
 
 import type { SidebarNavGroup } from "./types"
 
@@ -40,8 +45,21 @@ export const sidebarNavigationGroups: SidebarNavGroup[] = [
     items: [
       { type: "label", label: "Management" },
       ...ordersNavigation,
+      ...productsNavigation,
       ...customersNavigation,
       ...transactionsNavigation,
     ],
+  },
+  {
+    id: "content",
+    items: [{ type: "label", label: "Content" }, ...recipesNavigation, ...postsNavigation],
+  },
+  {
+    id: "administration",
+    items: [{ type: "label", label: "Administration" }, ...usersNavigation],
+  },
+  {
+    id: "tools",
+    items: [{ type: "label", label: "Tools" }, ...imageGeneratorNavigation],
   },
 ]

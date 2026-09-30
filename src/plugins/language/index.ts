@@ -24,6 +24,13 @@ type DotNotationKeys<T, Prefix extends string = ""> = {
 
 export type TranslationKey = DotNotationKeys<MessageSchema>
 
-export const translate = (key: TranslationKey) => i18n.global.t(key)
+/**
+ * Translates a typed message key.
+ *
+ * @param key - Dot-notation key from {@link MessageSchema}.
+ * @param named - Values for `{placeholder}` interpolation.
+ */
+export const translate = (key: TranslationKey, named: Record<string, unknown> = {}) =>
+  i18n.global.t(key, named)
 
 export const isTranslateExist = i18n.global.te
